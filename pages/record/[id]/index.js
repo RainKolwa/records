@@ -24,7 +24,6 @@ const RecordPage = ({ record }) => {
   return (
     <div key={record._id}>
       <div className="card">
-        <h5 className="record-name">{record._id}</h5>
         <div className="main-content">
           <p className="record-name">{record.sleepBegin}</p>
 

@@ -1,5 +1,5 @@
 import '../css/style.css';
-import '../css/form.css';
+
 import Head from 'next/head';
 import Link from 'next/link';
 
@@ -10,17 +10,14 @@ function MyApp({ Component, pageProps }) {
         <title>Record App</title>
       </Head>
 
-      <div className="top-bar">
-        <div className="nav">
+      <div className="container mx-auto">
+        <div className="text-3xl my-5 font-bold">
           <Link href="/">
-            <a>Home</a>
-          </Link>
-          <Link href="/record/new">
-            <a>Add Record</a>
+            <a className="underline">RECORDER</a>
           </Link>
         </div>
       </div>
-      <div className="grid wrapper">
+      <div className="container mx-auto">
         <Component {...pageProps} />
       </div>
     </>

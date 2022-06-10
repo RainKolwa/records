@@ -1,33 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
-
-* {
-  font-family: 'Open Sans', sans-serif;
-  box-sizing: border-box;
-}
-
-.nav {
-  display: flex;
-  margin: 1rem 0;
-}
-
-.nav a {
-  margin-right: 1rem;
-}
-
-.record-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.record-table th {
-  text-align: left;
-  font-weight: bold;
-  background: lightgray;
-}
-
-.record-table td,
-.record-table th {
-  border: 1px solid gray;
-  font-size: 14px;
-  padding: 5px;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

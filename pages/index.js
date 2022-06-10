@@ -11,42 +11,70 @@ const Index = ({ records }) => {
     router.push(`/record/${id}/edit`);
   };
   return (
-    <table className="record-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Sleep Begin</th>
-          <th>Sleep End</th>
-          <th>Eat Begin</th>
-          <th>Eat End</th>
-          <th>Sport</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {records.map((record) => (
-          <tr key={record._id}>
-            <td>
-              <Link href={`/record/${record._id}`}>
-                <a>{record._id}</a>
-              </Link>
-            </td>
-            <td>{record.sleepBegin}</td>
-            <td>{record.sleepEnd}</td>
-            <td>{record.eatBegin}</td>
-            <td>{record.eatEnd}</td>
-            <td>{record.sport} min</td>
-            <td>
-              <button onClick={() => handleEdit(record._id)}>Edit</button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <>
+      <Link href="/record/new">
+        <button
+          type="button"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+        >
+          Add Record
+        </button>
+      </Link>
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="px-6 py-4">
+                ID
+              </th>
+              <th scope="col" class="px-6 py-4">
+                Sleep Begin
+              </th>
+              <th scope="col" class="px-6 py-4">
+                Sleep End
+              </th>
+              <th scope="col" class="px-6 py-4">
+                Eat Begin
+              </th>
+              <th scope="col" class="px-6 py-4">
+                Eat End
+              </th>
+              <th scope="col" class="px-6 py-4">
+                Sport
+              </th>
+              <th scope="col" class="px-6 py-4">
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {records.map((record) => (
+              <tr
+                key={record._id}
+                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              >
+                <td className="px-6 py-4">
+                  <Link href={`/record/${record._id}`}>
+                    <a>{record._id}</a>
+                  </Link>
+                </td>
+                <td className="px-6 py-4">{record.sleepBegin}</td>
+                <td className="px-6 py-4">{record.sleepEnd}</td>
+                <td className="px-6 py-4">{record.eatBegin}</td>
+                <td className="px-6 py-4">{record.eatEnd}</td>
+                <td className="px-6 py-4">{record.sport} min</td>
+                <td className="px-6 py-4">
+                  <button onClick={() => handleEdit(record._id)}>Edit</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
 
-/* Retrieves record(s) data from mongodb database */
 export async function getServerSideProps() {
   await dbConnect();
 
