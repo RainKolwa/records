@@ -1,65 +1,61 @@
-import Link from 'next/link'
-import dbConnect from '../lib/dbConnect'
-import Pet from '../models/Pet'
+import Link from 'next/link';
+import dbConnect from '../lib/dbConnect';
+import Record from '../models/Record';
+import dayjs from 'dayjs';
 
-const Index = ({ pets }) => (
-  <>
-    {/* Create a card for each pet */}
-    {pets.map((pet) => (
-      <div key={pet._id}>
-        <div className="card">
-          <img src={pet.image_url} />
-          <h5 className="pet-name">{pet.name}</h5>
-          <div className="main-content">
-            <p className="pet-name">{pet.name}</p>
-            <p className="owner">Owner: {pet.owner_name}</p>
+const Index = ({ records }) => (
+  <table className="record-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Sleep Begin</th>
+        <th>Sleep End</th>
+        <th>Eat Begin</th>
+        <th>Eat End</th>
+        <th>Sport</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {records.map((record) => (
+        <tr key={record._id}>
+          <td>{record._id}</td>
+          <td>{record.sleepBegin}</td>
+          <td>{record.sleepEnd}</td>
+          <td>{record.eatBegin}</td>
+          <td>{record.eatEnd}</td>
+          <td>{record.sport} min</td>
+          <td>
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+);
 
-            {/* Extra Pet Info: Likes and Dislikes */}
-            <div className="likes info">
-              <p className="label">Likes</p>
-              <ul>
-                {pet.likes.map((data, index) => (
-                  <li key={index}>{data} </li>
-                ))}
-              </ul>
-            </div>
-            <div className="dislikes info">
-              <p className="label">Dislikes</p>
-              <ul>
-                {pet.dislikes.map((data, index) => (
-                  <li key={index}>{data} </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="btn-container">
-              <Link href="/[id]/edit" as={`/${pet._id}/edit`}>
-                <button className="btn edit">Edit</button>
-              </Link>
-              <Link href="/[id]" as={`/${pet._id}`}>
-                <button className="btn view">View</button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    ))}
-  </>
-)
-
-/* Retrieves pet(s) data from mongodb database */
+/* Retrieves record(s) data from mongodb database */
 export async function getServerSideProps() {
-  await dbConnect()
+  await dbConnect();
 
   /* find all the data in our database */
-  const result = await Pet.find({})
-  const pets = result.map((doc) => {
-    const pet = doc.toObject()
-    pet._id = pet._id.toString()
-    return pet
-  })
+  const result = await Record.find({}).lean();
+  const format = (date) => dayjs(date).format('YYYY/MM/DD HH:mm');
+  const records = result.map((doc) => {
+    return JSON.parse(
+      JSON.stringify({
+        _id: doc._id.toString(),
+        sleepBegin: format(doc.sleepBegin),
+        sleepEnd: format(doc.sleepEnd),
+        eatBegin: format(doc.eatBegin),
+        eatEnd: format(doc.eatEnd),
+        sport: doc.sport,
+      })
+    );
+  });
 
-  return { props: { pets: pets } }
+  return { props: { records: records } };
 }
 
-export default Index
+export default Index;
