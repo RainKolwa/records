@@ -55,7 +55,9 @@ const Index = ({ records }) => {
               >
                 <td className="px-6 py-4">
                   <Link href={`/record/${record._id}`}>
-                    <a>{record._id}</a>
+                    <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                      {record._id}
+                    </a>
                   </Link>
                 </td>
                 <td className="px-6 py-4">{record.sleepBegin}</td>
@@ -64,7 +66,12 @@ const Index = ({ records }) => {
                 <td className="px-6 py-4">{record.eatEnd}</td>
                 <td className="px-6 py-4">{record.sport} min</td>
                 <td className="px-6 py-4">
-                  <button onClick={() => handleEdit(record._id)}>Edit</button>
+                  <button
+                    onClick={() => handleEdit(record._id)}
+                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  >
+                    Edit
+                  </button>
                 </td>
               </tr>
             ))}

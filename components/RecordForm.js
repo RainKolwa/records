@@ -3,6 +3,16 @@ import { useRouter } from 'next/router';
 import { mutate } from 'swr';
 import dayjs from 'dayjs';
 
+const InputStyle =
+  'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+const LabelStyle =
+  'block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300';
+const Label = ({ name, text }) => (
+  <label htmlFor={name} className={LabelStyle}>
+    {text}
+  </label>
+);
+
 const Form = ({ formId, recordForm, forNewRecord = true }) => {
   const router = useRouter();
   const contentType = 'application/json';
@@ -97,53 +107,66 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
   };
 
   return (
-    <>
-      <form id={formId} onSubmit={handleSubmit}>
-        <label htmlFor="sleepBegin">SleepBegin</label>
-        <input
-          name="sleepBegin"
-          type="datetime-local"
-          value={form.sleepBegin}
-          onChange={handleChange}
-          required
-        />
-
-        <label htmlFor="sleepEnd">SleepEnd</label>
-        <input
-          name="sleepEnd"
-          type="datetime-local"
-          value={form.sleepEnd}
-          onChange={handleChange}
-          required
-        />
-
-        <label htmlFor="eatBegin">EatBegin</label>
-        <input
-          name="eatBegin"
-          type="datetime-local"
-          value={form.eatBegin}
-          onChange={handleChange}
-          required
-        />
-
-        <label htmlFor="eatEnd">EatEnd</label>
-        <input
-          name="eatEnd"
-          type="datetime-local"
-          value={form.eatEnd}
-          onChange={handleChange}
-          required
-        />
-
-        <label htmlFor="sport">SportTime</label>
-        <input
-          type="number"
-          name="sport"
-          value={form.sport}
-          onChange={handleChange}
-        />
-
-        <button type="submit" className="btn">
+    <div className="max-w-3xl">
+      <form id={formId} onSubmit={handleSubmit} className="w-full">
+        <div class="mb-6">
+          <Label name="sleepBegin" text="睡眠开始" />
+          <input
+            className={InputStyle}
+            name="sleepBegin"
+            type="datetime-local"
+            value={form.sleepBegin}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div class="mb-6">
+          <Label name="sleepEnd" text="睡眠结束" />
+          <input
+            className={InputStyle}
+            name="sleepEnd"
+            type="datetime-local"
+            value={form.sleepEnd}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div class="mb-6">
+          <Label name="eatBegin" text="进食开始" />
+          <input
+            className={InputStyle}
+            name="eatBegin"
+            type="datetime-local"
+            value={form.eatBegin}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div class="mb-6">
+          <Label name="eatEnd" text="进食结束" />
+          <input
+            className={InputStyle}
+            name="eatEnd"
+            type="datetime-local"
+            value={form.eatEnd}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div class="mb-6">
+          <Label name="sport" text="运动时长" />
+          <input
+            className={InputStyle}
+            type="number"
+            name="sport"
+            value={form.sport}
+            onChange={handleChange}
+          />
+        </div>
+        <button
+          type="submit"
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+        >
           Submit
         </button>
       </form>
@@ -153,7 +176,7 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
           <li key={index}>{err}</li>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
