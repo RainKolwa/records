@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { mutate } from 'swr';
-import dayjs from 'dayjs';
 
 const InputStyle =
   'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
@@ -110,7 +109,7 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
     <div className="max-w-3xl">
       <form id={formId} onSubmit={handleSubmit} className="w-full">
         <div class="mb-6">
-          <Label name="sleepBegin" text="睡眠开始" />
+          <Label name="sleepBegin" text="卧床时间开始" />
           <input
             className={InputStyle}
             name="sleepBegin"
@@ -121,7 +120,7 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
           />
         </div>
         <div class="mb-6">
-          <Label name="sleepEnd" text="睡眠结束" />
+          <Label name="sleepEnd" text="卧床时间结束" />
           <input
             className={InputStyle}
             name="sleepEnd"
