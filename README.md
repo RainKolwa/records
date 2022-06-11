@@ -7,3 +7,5 @@ TODO:
 - [ ] auth
 - [ ] dark mode
 - [ ] chart
+  - [ ] trend
+  - [ ] daily check
