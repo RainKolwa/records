@@ -1,6 +1,7 @@
 import '../css/globals.css';
 import Head from 'next/head';
 import Link from 'next/link';
+import DarkSwitcher from '../components/DarkSwitcher';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -9,11 +10,14 @@ function MyApp({ Component, pageProps }) {
         <title>Record App</title>
       </Head>
 
-      <div className="container mx-auto">
+      <div className="container mx-auto flex justify-between">
         <div className="text-3xl py-5 font-bold">
           <Link href="/">
             <a className="underline text-black dark:text-white">RECORDER</a>
           </Link>
+        </div>
+        <div className="flex items-center">
+          <DarkSwitcher />
         </div>
       </div>
       <div className="container mx-auto">

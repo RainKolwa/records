@@ -9,4 +9,5 @@ TODO:
 - [ ] chart
   - [ ] trend
   - [ ] daily check
-- [ ] lint code
+- [x] lint code
+- [ ] dev env
