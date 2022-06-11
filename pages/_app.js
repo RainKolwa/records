@@ -1,5 +1,4 @@
-import '../css/style.css';
-
+import '../css/globals.css';
 import Head from 'next/head';
 import Link from 'next/link';
 
