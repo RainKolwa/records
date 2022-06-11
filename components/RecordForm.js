@@ -108,7 +108,7 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
   return (
     <div className="max-w-3xl">
       <form id={formId} onSubmit={handleSubmit} className="w-full">
-        <div class="mb-6">
+        <div className="mb-6">
           <Label name="sleepBegin" text="卧床时间开始" />
           <input
             className={InputStyle}
@@ -119,7 +119,7 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
             required
           />
         </div>
-        <div class="mb-6">
+        <div className="mb-6">
           <Label name="sleepEnd" text="卧床时间结束" />
           <input
             className={InputStyle}
@@ -130,7 +130,7 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
             required
           />
         </div>
-        <div class="mb-6">
+        <div className="mb-6">
           <Label name="eatBegin" text="进食开始" />
           <input
             className={InputStyle}
@@ -141,7 +141,7 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
             required
           />
         </div>
-        <div class="mb-6">
+        <div className="mb-6">
           <Label name="eatEnd" text="进食结束" />
           <input
             className={InputStyle}
@@ -152,7 +152,7 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
             required
           />
         </div>
-        <div class="mb-6">
+        <div className="mb-6">
           <Label name="sport" text="运动时长" />
           <input
             className={InputStyle}
