@@ -9,3 +9,4 @@ TODO:
 - [ ] chart
   - [ ] trend
   - [ ] daily check
+- [ ] lint code
