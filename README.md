@@ -5,9 +5,11 @@
 TODO:
 
 - [ ] auth
-- [ ] dark mode
+  - [ ] Google account
+  - [ ] GitHub account
+- [x] dark mode
 - [ ] chart
   - [ ] trend
   - [ ] daily check
 - [x] lint code
-- [ ] dev env
+- [x] dev env
