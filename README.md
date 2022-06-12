@@ -6,10 +6,11 @@ TODO:
 
 - [ ] auth
   - [ ] Google account
-  - [ ] GitHub account
+  - [x] GitHub account
 - [x] dark mode
 - [ ] chart
   - [ ] trend
   - [ ] daily check
 - [x] lint code
 - [x] dev env
+- [ ] users
