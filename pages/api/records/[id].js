@@ -1,7 +1,8 @@
 import dbConnect from '@/lib/dbConnect';
 import Record from '@/models/Record';
+import withSession from '@/lib/withSession';
 
-export default async function handler(req, res) {
+const handler = async (req, res) => {
   const {
     query: { id },
     method,
@@ -53,4 +54,6 @@ export default async function handler(req, res) {
       res.status(400).json({ code: 1 });
       break;
   }
-}
+};
+
+export default withSession(handler);

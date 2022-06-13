@@ -12,4 +12,10 @@ export default NextAuth({
     }),
   ],
   adapter: MongoDBAdapter(clientPromise),
+  callbacks: {
+    session: async ({ session, user }) => {
+      session.user.id = user.id;
+      return Promise.resolve(session);
+    },
+  },
 });

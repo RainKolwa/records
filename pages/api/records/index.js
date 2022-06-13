@@ -1,6 +1,7 @@
 import { getSession } from 'next-auth/react';
 import dbConnect from '@/lib/dbConnect';
 import Record from '@/models/Record';
+import mongoose from 'mongoose';
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -19,11 +20,13 @@ export default async function handler(req, res) {
     case 'POST':
       try {
         const session = await getSession({ req });
-        console.log(session);
         if (!session) {
-          res.status(401).json({ error: 'Unauthorized' });
+          return res.status(401).json({ error: 'Unauthorized' });
         }
-        const record = await Record.create(req.body);
+        const record = await Record.create({
+          ...req.body,
+          author: mongoose.Types.ObjectId(session.user.id),
+        });
         res.status(201).json({ code: 0, data: record });
       } catch (error) {
         res.status(400).json({ code: 1 });

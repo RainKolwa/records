@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 
-const RecordSchema = new mongoose.Schema(
+const { Schema } = mongoose;
+
+const RecordSchema = new Schema(
   {
     sleepBegin: {
       type: Date,
@@ -21,6 +23,7 @@ const RecordSchema = new mongoose.Schema(
     sport: {
       type: Number,
     },
+    author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   },
   { collection: 'posts' }
 );
