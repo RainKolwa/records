@@ -10,47 +10,47 @@ export default async function handler(req, res) {
   await dbConnect();
 
   switch (method) {
-    case 'GET' /* Get a model by its ID */:
+    case 'GET':
       try {
         const record = await Record.findById(id);
         if (!record) {
-          return res.status(400).json({ success: false });
+          return res.status(400).json({ code: 1, message: 'Record not found' });
         }
-        res.status(200).json({ success: true, data: record });
+        res.status(200).json({ code: 0, data: record });
       } catch (error) {
-        res.status(400).json({ success: false });
+        res.status(400).json({ code: 1, message: 'Failed to get record' });
       }
       break;
 
-    case 'PUT' /* Edit a model by its ID */:
+    case 'PUT':
       try {
         const record = await Record.findByIdAndUpdate(id, req.body, {
           new: true,
           runValidators: true,
         });
         if (!record) {
-          return res.status(400).json({ success: false });
+          return res.status(400).json({ code: 1, message: 'Record not found' });
         }
-        res.status(200).json({ success: true, data: record });
+        res.status(200).json({ code: 0, data: record });
       } catch (error) {
-        res.status(400).json({ success: false });
+        res.status(400).json({ code: 1 });
       }
       break;
 
-    case 'DELETE' /* Delete a model by its ID */:
+    case 'DELETE':
       try {
         const deletedRecord = await Record.deleteOne({ _id: id });
         if (!deletedRecord) {
-          return res.status(400).json({ success: false });
+          return res.status(400).json({ code: 1, message: 'Failed to delete' });
         }
-        res.status(200).json({ success: true, data: {} });
+        res.status(200).json({ code: 0, data: {} });
       } catch (error) {
-        res.status(400).json({ success: false });
+        res.status(400).json({ code: 1 });
       }
       break;
 
     default:
-      res.status(400).json({ success: false });
+      res.status(400).json({ code: 1 });
       break;
   }
 }

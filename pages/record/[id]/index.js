@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 import dbConnect from '@/lib/dbConnect';
+import request from '@/lib/request';
 import Record from '@/models/Record';
 
 /* Allows you to view record card info and delete record card*/
@@ -12,9 +13,7 @@ const RecordPage = ({ record }) => {
   const handleDelete = async () => {
     const recordID = router.query.id;
     try {
-      await fetch(`/api/records/${recordID}`, {
-        method: 'Delete',
-      });
+      await request.delete(`/records/${recordID}`);
       router.push('/');
     } catch (error) {
       setMessage('Failed to delete the record.');

@@ -13,7 +13,11 @@ const NewRecord = () => {
     sport: 0,
   };
 
-  return <Form formId="add-record-form" recordForm={recordForm} />;
+  return (
+    <div className="mx-auto w-80">
+      <Form formId="add-record-form" recordForm={recordForm} />
+    </div>
+  );
 };
 
 export default NewRecord;

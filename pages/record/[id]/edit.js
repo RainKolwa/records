@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import dayjs from 'dayjs';
+import { Spinner } from 'flowbite-react';
 import RecordForm from '@/components/RecordForm';
 
 const fetcher = (url) =>
@@ -18,8 +19,13 @@ const EditRecord = () => {
     fetcher
   );
 
-  if (error) return <p>Failed to load</p>;
-  if (!record) return <p>Loading...</p>;
+  if (error) return <p className="text-center">Failed to load</p>;
+  if (!record)
+    return (
+      <div className="text-center">
+        <Spinner color="blue" />
+      </div>
+    );
 
   const recordForm = {
     sleepBegin: localize(record.sleepBegin),
@@ -30,11 +36,13 @@ const EditRecord = () => {
   };
 
   return (
-    <RecordForm
-      formId="edit-record-form"
-      recordForm={recordForm}
-      forNewRecord={false}
-    />
+    <div className="mx-auto w-80">
+      <RecordForm
+        formId="edit-record-form"
+        recordForm={recordForm}
+        forNewRecord={false}
+      />
+    </div>
   );
 };
 

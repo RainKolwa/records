@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { mutate } from 'swr';
+import request from '@/lib/request';
 
 const InputStyle =
   'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
@@ -14,7 +15,6 @@ const Label = ({ name, text }) => (
 
 const Form = ({ formId, recordForm, forNewRecord = true }) => {
   const router = useRouter();
-  const contentType = 'application/json';
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState('');
 
@@ -26,27 +26,13 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
     sport: recordForm.sport,
   });
 
-  /* The PUT method edits an existing entry in the mongodb database. */
   const putData = async (form) => {
     const { id } = router.query;
-
     try {
-      const res = await fetch(`/api/records/${id}`, {
-        method: 'PUT',
-        headers: {
-          Accept: contentType,
-          'Content-Type': contentType,
-        },
-        body: JSON.stringify(form),
-      });
-
-      // Throw error with status code in case Fetch API req failed
-      if (!res.ok) {
-        throw new Error(res.status);
+      const { code, data, message } = await request.put(`/records/${id}`, form);
+      if (code !== 0) {
+        throw new Error(message);
       }
-
-      const { data } = await res.json();
-
       mutate(`/api/records/${id}`, data, false); // Update the local data without a revalidation
       router.push('/');
     } catch (error) {
@@ -57,20 +43,10 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
   /* The POST method adds a new entry in the mongodb database. */
   const postData = async (form) => {
     try {
-      const res = await fetch('/api/records', {
-        method: 'POST',
-        headers: {
-          Accept: contentType,
-          'Content-Type': contentType,
-        },
-        body: JSON.stringify(form),
-      });
-
-      // Throw error with status code in case Fetch API req failed
-      if (!res.ok) {
-        throw new Error(res.status);
+      const { code, message } = await request.post('/records', form);
+      if (code !== 0) {
+        throw new Error(message);
       }
-
       router.push('/');
     } catch (error) {
       setMessage('Failed to add record');
@@ -106,7 +82,7 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
   };
 
   return (
-    <div className="max-w-3xl">
+    <>
       <form id={formId} onSubmit={handleSubmit} className="w-full">
         <div className="mb-6">
           <Label name="sleepBegin" text="卧床时间开始" />
@@ -175,7 +151,7 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
           <li key={index}>{err}</li>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 

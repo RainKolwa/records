@@ -84,7 +84,7 @@ const Index = ({ records }) => {
 export async function getServerSideProps() {
   await dbConnect();
 
-  const result = await Record.find({}).lean();
+  const result = await Record.find({}).sort('-sleepBegin').lean();
   const format = (date) => dayjs(date).format('YYYY/MM/DD HH:mm');
   const records = result.map((doc) => {
     return JSON.parse(

@@ -1,3 +1,4 @@
+import { getSession } from 'next-auth/react';
 import dbConnect from '@/lib/dbConnect';
 import Record from '@/models/Record';
 
@@ -9,26 +10,27 @@ export default async function handler(req, res) {
   switch (method) {
     case 'GET':
       try {
-        const records = await Record.find(
-          {}
-        ); /* find all the data in our database */
-        res.status(200).json({ success: true, data: records });
+        const records = await Record.find({});
+        res.status(200).json({ code: 0, data: records });
       } catch (error) {
-        res.status(400).json({ success: false });
+        res.status(400).json({ code: 1 });
       }
       break;
     case 'POST':
       try {
-        const record = await Record.create(
-          req.body
-        ); /* create a new model in the database */
-        res.status(201).json({ success: true, data: record });
+        const session = await getSession({ req });
+        console.log(session);
+        if (!session) {
+          res.status(401).json({ error: 'Unauthorized' });
+        }
+        const record = await Record.create(req.body);
+        res.status(201).json({ code: 0, data: record });
       } catch (error) {
-        res.status(400).json({ success: false });
+        res.status(400).json({ code: 1 });
       }
       break;
     default:
-      res.status(400).json({ success: false });
+      res.status(400).json({ code: 1 });
       break;
   }
 }

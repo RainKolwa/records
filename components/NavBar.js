@@ -3,10 +3,12 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 import DarkSwitcher from '@/components/DarkSwitcher';
 
 export default function HeaderNavBar() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const {
     user: { email, name, image: avatar },
   } = session || { user: {} };
+  const isLoggedIn = status === 'authenticated';
+
   return (
     <Navbar fluid={true} rounded={true} className="relative z-10 py-6">
       <Navbar.Brand href="/">
@@ -23,7 +25,7 @@ export default function HeaderNavBar() {
         <div className="mr-4">
           <DarkSwitcher />
         </div>
-        {session ? (
+        {isLoggedIn ? (
           <Dropdown
             arrowIcon={false}
             inline={true}
