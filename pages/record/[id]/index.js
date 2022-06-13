@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import Link from 'next/link';
-import dbConnect from '../../../lib/dbConnect';
-import Record from '../../../models/Record';
+import dayjs from 'dayjs';
+import dbConnect from '@/lib/dbConnect';
+import Record from '@/models/Record';
 
 /* Allows you to view record card info and delete record card*/
 const RecordPage = ({ record }) => {

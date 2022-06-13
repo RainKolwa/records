@@ -1,5 +1,5 @@
-import Form from '../../components/RecordForm';
 import dayjs from 'dayjs';
+import Form from '@/components/RecordForm';
 
 const localize = (date) => dayjs(date).format('YYYY-MM-DDTHH:mm');
 

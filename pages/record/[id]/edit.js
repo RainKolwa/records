@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
-import RecordForm from '../../../components/RecordForm';
 import dayjs from 'dayjs';
+import RecordForm from '@/components/RecordForm';
 
 const fetcher = (url) =>
   fetch(url)

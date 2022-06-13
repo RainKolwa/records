@@ -1,9 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-
-import dbConnect from '../lib/dbConnect';
-import Record from '../models/Record';
 import dayjs from 'dayjs';
+import dbConnect from '@/lib/dbConnect';
+import Record from '@/models/Record';
 
 const Index = ({ records }) => {
   const router = useRouter();

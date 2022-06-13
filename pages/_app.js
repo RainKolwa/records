@@ -1,7 +1,7 @@
 import '../css/globals.css';
 import Head from 'next/head';
-import NavBar from '../components/NavBar';
 import { SessionProvider } from 'next-auth/react';
+import NavBar from '@/components/NavBar';
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
   return (

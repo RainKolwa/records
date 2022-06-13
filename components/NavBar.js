@@ -1,6 +1,6 @@
 import { Navbar, Dropdown, Button, Avatar } from 'flowbite-react';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import DarkSwitcher from '../components/DarkSwitcher';
+import DarkSwitcher from '@/components/DarkSwitcher';
 
 export default function HeaderNavBar() {
   const { data: session } = useSession();
