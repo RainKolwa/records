@@ -47,33 +47,36 @@ const Index = ({ records }) => {
             </tr>
           </thead>
           <tbody>
-            {records.map((record) => (
-              <tr
-                key={record._id}
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-              >
-                <td className="px-6 py-4">
-                  <Link href={`/record/${record._id}`}>
-                    <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                      {record._id}
-                    </a>
-                  </Link>
-                </td>
-                <td className="px-6 py-4">{record.sleepBegin}</td>
-                <td className="px-6 py-4">{record.sleepEnd}</td>
-                <td className="px-6 py-4">{record.eatBegin}</td>
-                <td className="px-6 py-4">{record.eatEnd}</td>
-                <td className="px-6 py-4">{record.sport} min</td>
-                <td className="px-6 py-4">
-                  <button
-                    onClick={() => handleEdit(record._id)}
-                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                  >
-                    Edit
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {records.map((record) => {
+              const format = (date) => dayjs(date).format('YYYY/MM/DD HH:mm');
+              return (
+                <tr
+                  key={record._id}
+                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                >
+                  <td className="px-6 py-4">
+                    <Link href={`/record/${record._id}`}>
+                      <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                        {record._id}
+                      </a>
+                    </Link>
+                  </td>
+                  <td className="px-6 py-4">{format(record.sleepBegin)}</td>
+                  <td className="px-6 py-4">{format(record.sleepEnd)}</td>
+                  <td className="px-6 py-4">{format(record.eatBegin)}</td>
+                  <td className="px-6 py-4">{format(record.eatEnd)}</td>
+                  <td className="px-6 py-4">{record.sport} min</td>
+                  <td className="px-6 py-4">
+                    <button
+                      onClick={() => handleEdit(record._id)}
+                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    >
+                      Edit
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -85,16 +88,15 @@ export async function getServerSideProps() {
   await dbConnect();
 
   const result = await Record.find({}).sort('-sleepBegin').lean();
-  const format = (date) => dayjs(date).format('YYYY/MM/DD HH:mm');
   const records = result.map((doc) => {
     return JSON.parse(
       JSON.stringify({
         ...doc,
         _id: doc._id.toString(),
-        sleepBegin: format(doc.sleepBegin),
-        sleepEnd: format(doc.sleepEnd),
-        eatBegin: format(doc.eatBegin),
-        eatEnd: format(doc.eatEnd),
+        sleepBegin: doc.sleepBegin,
+        sleepEnd: doc.sleepEnd,
+        eatBegin: doc.eatBegin,
+        eatEnd: doc.eatEnd,
       })
     );
   });
