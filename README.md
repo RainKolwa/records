@@ -1,11 +1,17 @@
-# Record
+# Ming
 
-记录每天起床、进食、运动时间。
+## Who?
+
+[Ming](https://en.wikipedia.org/wiki/Ming_(clam)), the clam, lived as long as 507 years.
+
+## What for?
+
+Recently I read [an article](https://github.com/zijie0/HumanSystemOptimization) about how to live more healthy and longer, and this site would be used to record everyday-time for bedding, eating, and sporting.
 
 TODO:
 
-- [ ] auth
-  - [ ] Google account
+- [x] auth
+  - [x] Google account
   - [x] GitHub account
 - [x] dark mode
 - [ ] chart
@@ -14,3 +20,4 @@ TODO:
 - [x] lint code
 - [x] dev env
 - [ ] users
+- [ ] Index Page

@@ -1,6 +1,8 @@
 import { Navbar, Dropdown, Button, Avatar } from 'flowbite-react';
 import { useSession, signIn, signOut } from 'next-auth/react';
+import Image from 'next/image';
 import DarkSwitcher from '@/components/DarkSwitcher';
+import logo from '@/assets/clam-logo.png';
 
 export default function HeaderNavBar() {
   const { data: session, status } = useSession();
@@ -12,13 +14,9 @@ export default function HeaderNavBar() {
   return (
     <Navbar fluid={true} rounded={true} className="relative z-10 py-6">
       <Navbar.Brand href="/">
-        <img
-          src="https://flowbite.com/docs/images/logo.svg"
-          className="mr-3 h-6 sm:h-9"
-          alt="Flowbite Logo"
-        />
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          Recorder
+        <Image src={logo} width="38" height="38" alt="Ming Logo" />
+        <span className="ml-2 self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+          Ming
         </span>
       </Navbar.Brand>
       <div className="flex md:order-2">
