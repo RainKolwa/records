@@ -1,84 +1,83 @@
-import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import dayjs from 'dayjs';
 import dbConnect from '@/lib/dbConnect';
 import Record from '@/models/Record';
 
+import duration from 'dayjs/plugin/duration';
+dayjs.extend(duration);
+
+const Calendar = dynamic(() => import('@/components/Calendar'), {
+  ssr: false,
+});
+
+const Line = dynamic(() => import('@/components/Line'), {
+  ssr: false,
+});
+
 const Index = ({ records }) => {
-  const router = useRouter();
-  const handleEdit = (id) => {
-    router.push(`/record/${id}/edit`);
-  };
+  console.log(records);
+  const heatData = Array(30)
+    .fill(null)
+    .map((m, i) => {
+      return {
+        value: i,
+        day: dayjs('2022-01-01')
+          .add(dayjs.duration({ days: i }))
+          .format('YYYY-MM-DD'),
+      };
+    });
+  const trendData = records.map((record) => {
+    const sleepDuration = dayjs(record.sleepEnd).diff(
+      dayjs(record.sleepBegin),
+      'hour'
+    );
+    const eatDuration = dayjs(record.eatEnd).diff(
+      dayjs(record.eatBegin),
+      'hour'
+    );
+    const sportDuration = record.sport / 60;
+    return {
+      date: dayjs(record.sleepEnd).format('MM-DD'),
+      sleepDuration,
+      eatDuration,
+      sportDuration,
+    };
+  });
   return (
     <>
-      <Link href="/record/new">
-        <button
-          type="button"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-4 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-        >
-          Add Record
-        </button>
-      </Link>
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-4">
-                ID
-              </th>
-              <th scope="col" className="px-6 py-4">
-                Sleep Begin
-              </th>
-              <th scope="col" className="px-6 py-4">
-                Sleep End
-              </th>
-              <th scope="col" className="px-6 py-4">
-                Eat Begin
-              </th>
-              <th scope="col" className="px-6 py-4">
-                Eat End
-              </th>
-              <th scope="col" className="px-6 py-4">
-                Sport
-              </th>
-              <th scope="col" className="px-6 py-4">
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {records.map((record) => {
-              const format = (date) => dayjs(date).format('YYYY/MM/DD HH:mm');
-              return (
-                <tr
-                  key={record._id}
-                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                >
-                  <td className="px-6 py-4">
-                    <Link href={`/record/${record._id}`}>
-                      <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                        {record._id}
-                      </a>
-                    </Link>
-                  </td>
-                  <td className="px-6 py-4">{format(record.sleepBegin)}</td>
-                  <td className="px-6 py-4">{format(record.sleepEnd)}</td>
-                  <td className="px-6 py-4">{format(record.eatBegin)}</td>
-                  <td className="px-6 py-4">{format(record.eatEnd)}</td>
-                  <td className="px-6 py-4">{record.sport} min</td>
-                  <td className="px-6 py-4">
-                    <button
-                      onClick={() => handleEdit(record._id)}
-                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                    >
-                      Edit
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div style={{ height: '400px', width: '920px' }}>
+        <Calendar data={heatData} />
+      </div>
+      <div style={{ height: '400px', width: '920px' }}>
+        <Line
+          data={[
+            {
+              id: 'sleep',
+              color: 'hsl(83, 70%, 50%)',
+              data: trendData.map((item) => ({
+                x: item.date,
+                y: item.sleepDuration,
+              })),
+            },
+            {
+              id: 'eat',
+              color: 'hsl(331, 70%, 50%)',
+              data: trendData.map((item) => ({
+                x: item.date,
+                y: item.eatDuration,
+              })),
+            },
+            {
+              id: 'sport',
+              color: 'hsl(105, 70%, 50%)',
+              data: trendData.map((item) => ({
+                x: item.date,
+                y: item.sportDuration,
+              })),
+            },
+          ]}
+        />
       </div>
     </>
   );
@@ -87,7 +86,7 @@ const Index = ({ records }) => {
 export async function getServerSideProps() {
   await dbConnect();
 
-  const result = await Record.find({}).sort('-sleepBegin').lean();
+  const result = await Record.find({}).sort('sleepBegin').lean();
   const records = result.map((doc) => {
     return JSON.parse(
       JSON.stringify({
