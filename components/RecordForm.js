@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { mutate } from 'swr';
+import dayjs from 'dayjs';
 import request from '@/lib/request';
 
 const InputStyle =
@@ -12,6 +13,17 @@ const Label = ({ name, text }) => (
     {text}
   </label>
 );
+const localize = (date) => dayjs(date).format('YYYY-MM-DDTHH:mm:ss');
+const unlocalize = (date) => dayjs(date).toISOString();
+const formatForm = (form) => {
+  return {
+    ...form,
+    sleepBegin: unlocalize(form.sleepBegin),
+    sleepEnd: unlocalize(form.sleepEnd),
+    eatBegin: unlocalize(form.eatBegin),
+    eatEnd: unlocalize(form.eatEnd),
+  };
+};
 
 const Form = ({ formId, recordForm, forNewRecord = true }) => {
   const router = useRouter();
@@ -19,17 +31,20 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
   const [message, setMessage] = useState('');
 
   const [form, setForm] = useState({
-    sleepBegin: recordForm.sleepBegin,
-    sleepEnd: recordForm.sleepEnd,
-    eatBegin: recordForm.eatBegin,
-    eatEnd: recordForm.eatEnd,
+    sleepBegin: localize(recordForm.sleepBegin),
+    sleepEnd: localize(recordForm.sleepEnd),
+    eatBegin: localize(recordForm.eatBegin),
+    eatEnd: localize(recordForm.eatEnd),
     sport: recordForm.sport,
   });
 
   const putData = async (form) => {
     const { id } = router.query;
     try {
-      const { code, data, message } = await request.put(`/records/${id}`, form);
+      const { code, data, message } = await request.put(
+        `/records/${id}`,
+        formatForm(form)
+      );
       if (code !== 0) {
         throw new Error(message);
       }
@@ -43,7 +58,10 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
   /* The POST method adds a new entry in the mongodb database. */
   const postData = async (form) => {
     try {
-      const { code, message } = await request.post('/records', form);
+      const { code, message } = await request.post(
+        '/records',
+        formatForm(form)
+      );
       if (code !== 0) {
         throw new Error(message);
       }

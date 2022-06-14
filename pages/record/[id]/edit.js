@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
-import dayjs from 'dayjs';
 import { Spinner } from 'flowbite-react';
 import RecordForm from '@/components/RecordForm';
 
@@ -8,8 +7,6 @@ const fetcher = (url) =>
   fetch(url)
     .then((res) => res.json())
     .then((json) => json.data);
-
-const localize = (date) => dayjs(date).format('YYYY-MM-DDTHH:mm');
 
 const EditRecord = () => {
   const router = useRouter();
@@ -28,10 +25,10 @@ const EditRecord = () => {
     );
 
   const recordForm = {
-    sleepBegin: localize(record.sleepBegin),
-    sleepEnd: localize(record.sleepEnd),
-    eatBegin: localize(record.eatBegin),
-    eatEnd: localize(record.eatEnd),
+    sleepBegin: record.sleepBegin,
+    sleepEnd: record.sleepEnd,
+    eatBegin: record.eatBegin,
+    eatEnd: record.eatEnd,
     sport: record.sport,
   };
 

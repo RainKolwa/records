@@ -1,10 +1,7 @@
-import dayjs from 'dayjs';
 import Form from '@/components/RecordForm';
 
-const localize = (date) => dayjs(date).format('YYYY-MM-DDTHH:mm');
-
 const NewRecord = () => {
-  const now = localize(new Date().valueOf());
+  const now = new Date();
   const recordForm = {
     sleepBegin: now,
     sleepEnd: now,

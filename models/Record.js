@@ -25,7 +25,7 @@ const RecordSchema = new Schema(
     },
     author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   },
-  { collection: 'posts' }
+  { timestamps: true }
 );
 
 export default mongoose.models.Record || mongoose.model('Record', RecordSchema);
