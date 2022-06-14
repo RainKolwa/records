@@ -8,7 +8,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
     <SessionProvider session={session}>
       <div className="bg-white dark:bg-slate-800 min-h-screen">
         <Head>
-          <title>Recorder</title>
+          <title>Ming</title>
         </Head>
         <div className="container mx-auto">
           <NavBar />
