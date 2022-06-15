@@ -1,6 +1,8 @@
 import '../css/globals.css';
+import 'react-toastify/dist/ReactToastify.css';
 import Head from 'next/head';
 import { SessionProvider } from 'next-auth/react';
+import { ToastContainer } from 'react-toastify';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 
@@ -19,6 +21,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
           <Footer />
         </div>
       </div>
+      <ToastContainer />
     </SessionProvider>
   );
 }

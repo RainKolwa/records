@@ -22,6 +22,7 @@
     "next-auth": "^4.4.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-toastify": "^9.0.4",
     "swr": "^1.0.1"
   },
   "devDependencies": {

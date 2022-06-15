@@ -2,7 +2,7 @@ import { Navbar, Dropdown, Button, Avatar } from 'flowbite-react';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import Image from 'next/image';
 import DarkSwitcher from '@/components/DarkSwitcher';
-import logo from '@/assets/clam-logo.png';
+import logo from '@/assets/logo.png';
 import { useRouter } from 'next/router';
 
 export default function HeaderNavBar() {

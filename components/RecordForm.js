@@ -49,7 +49,7 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
         throw new Error(message);
       }
       mutate(`/api/records/${id}`, data, false); // Update the local data without a revalidation
-      router.push('/');
+      router.push('/dashboard');
     } catch (error) {
       setMessage('Failed to update record');
     }
@@ -65,7 +65,7 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
       if (code !== 0) {
         throw new Error(message);
       }
-      router.push('/');
+      router.push('/dashboard');
     } catch (error) {
       setMessage('Failed to add record');
     }
