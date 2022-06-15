@@ -3,9 +3,12 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 import Image from 'next/image';
 import DarkSwitcher from '@/components/DarkSwitcher';
 import logo from '@/assets/clam-logo.png';
+import { useRouter } from 'next/router';
 
 export default function HeaderNavBar() {
   const { data: session, status } = useSession();
+  const router = useRouter();
+  const pathname = router.pathname;
   const {
     user: { email, name, image: avatar },
   } = session || { user: {} };
@@ -48,6 +51,17 @@ export default function HeaderNavBar() {
         )}
         <Navbar.Toggle />
       </div>
+      <Navbar.Collapse>
+        <Navbar.Link href="/" active={pathname === '/'}>
+          Home
+        </Navbar.Link>
+        <Navbar.Link href="/dashboard" active={pathname === '/dashboard'}>
+          Dashboard
+        </Navbar.Link>
+        <Navbar.Link href="/about" active={pathname === '/about'}>
+          About
+        </Navbar.Link>
+      </Navbar.Collapse>
     </Navbar>
   );
 }

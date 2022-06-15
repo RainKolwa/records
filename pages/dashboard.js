@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { getSession } from 'next-auth/react';
 import dayjs from 'dayjs';
 import dbConnect from '@/lib/dbConnect';
 import Record from '@/models/Record';
@@ -84,24 +85,23 @@ const Index = ({ records }) => {
   );
 };
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
   await dbConnect();
-
-  const result = await Record.find({}).sort('sleepEnd').lean();
-  console.log(result);
-  const records = result.map((doc) => {
-    return JSON.parse(
-      JSON.stringify({
-        ...doc,
-        _id: doc._id.toString(),
-        sleepBegin: doc.sleepBegin,
-        sleepEnd: doc.sleepEnd,
-        eatBegin: doc.eatBegin,
-        eatEnd: doc.eatEnd,
-      })
-    );
-  });
-
+  const session = await getSession(context);
+  let records = [];
+  if (session) {
+    const result = await Record.find({ author: session?.user?.id })
+      .sort('-sleepEnd')
+      .lean();
+    records = result.map((doc) => {
+      return JSON.parse(
+        JSON.stringify({
+          ...doc,
+          _id: doc._id.toString(),
+        })
+      );
+    });
+  }
   return { props: { records: records } };
 }
 
