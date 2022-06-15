@@ -1,5 +1,6 @@
-import '../css/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
+import '../css/globals.css';
+import '../css/toast.css';
 import Head from 'next/head';
 import { SessionProvider } from 'next-auth/react';
 import { ToastContainer } from 'react-toastify';
@@ -12,16 +13,18 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
       <Head>
         <title>Ming</title>
       </Head>
-      <div className="container mx-auto">
-        <div className="flex flex-col justify-between bg-white dark:bg-slate-800 min-h-screen">
-          <NavBar />
-          <div className="page-content mb-auto">
-            <Component {...pageProps} />
+      <div className="bg-white dark:bg-slate-800">
+        <div className="container mx-auto">
+          <div className="flex flex-col justify-between min-h-screen">
+            <NavBar />
+            <div className="page-content mb-auto">
+              <Component {...pageProps} />
+            </div>
+            <Footer />
           </div>
-          <Footer />
         </div>
+        <ToastContainer className="my-toast" />
       </div>
-      <ToastContainer />
     </SessionProvider>
   );
 }

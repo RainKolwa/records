@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@heroicons/react': ^1.0.6
   '@next-auth/mongodb-adapter': ^1.0.3
   '@nivo/calendar': ^0.79.1
   '@nivo/colors': ^0.79.1
@@ -25,6 +26,7 @@ specifiers:
   tailwindcss: ^3.1.1
 
 dependencies:
+  '@heroicons/react': 1.0.6_react@18.1.0
   '@next-auth/mongodb-adapter': 1.0.3_h3jvr4sw33dco7uklkcksh3gvi
   '@nivo/calendar': 0.79.1_jqpsxe7tnl3vctjrz5f3wi6tfe
   '@nivo/colors': 0.79.1_cmuolrkphj27aj2u64zkd5uaym
@@ -119,6 +121,14 @@ packages:
       - '@types/react'
     dev: false
 
+  /@heroicons/react/1.0.6_react@18.1.0:
+    resolution: {integrity: sha512-JJCXydOFWMDpCP4q13iEplA503MQO3xLoZiKum+955ZCtHINWnx26CUxVxxFQu/uLb4LW3ge15ZpzIkXKkJ8oQ==}
+    peerDependencies:
+      react: '>= 16'
+    dependencies:
+      react: 18.1.0
+    dev: false
+
   /@humanwhocodes/config-array/0.9.5:
     resolution: {integrity: sha512-ObyMyWxZiCu/yTisA7uzx81s40xR2fD5Cg/2Kq7G02ajkNubJf6BopgDTmDyc3U7sXpNKM8cYOw7s7Tyr+DnCw==}
     engines: {node: '>=10.10.0'}
@@ -194,7 +204,6 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
     requiresBuild: true
     optional: true
 
@@ -203,7 +212,6 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
     requiresBuild: true
     optional: true
 
@@ -212,7 +220,6 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
     requiresBuild: true
     optional: true
 
@@ -221,7 +228,6 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
     requiresBuild: true
     optional: true
 
@@ -608,7 +614,7 @@ packages:
       normalize-path: r2.cnpmjs.org/normalize-path/3.0.0
       readdirp: r2.cnpmjs.org/readdirp/3.6.0
     optionalDependencies:
-      fsevents: r2.cnpmjs.org/fsevents/2.3.2
+      fsevents: 2.3.2
 
   /cookie/0.4.2:
     resolution: {integrity: sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==}
@@ -953,6 +959,13 @@ packages:
     resolution: {integrity: sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==}
     dev: true
 
+  /fsevents/2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+    requiresBuild: true
+    optional: true
+
   /functions-have-names/1.2.3:
     resolution: {integrity: sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==}
     dev: true
@@ -1101,7 +1114,7 @@ packages:
       mongodb-connection-string-url: 2.5.2
       socks: 2.6.2
     optionalDependencies:
-      saslprep: r2.cnpmjs.org/saslprep/1.0.3
+      saslprep: 1.0.3
     dev: false
 
   /mongodb/4.7.0:
@@ -1113,7 +1126,7 @@ packages:
       mongodb-connection-string-url: 2.5.2
       socks: 2.6.2
     optionalDependencies:
-      saslprep: r2.cnpmjs.org/saslprep/1.0.3
+      saslprep: 1.0.3
     dev: false
 
   /mongoose/6.3.6:
@@ -1194,7 +1207,7 @@ packages:
     dependencies:
       '@next/env': 12.1.6
       caniuse-lite: 1.0.30001352
-      postcss: r2.cnpmjs.org/postcss/8.4.5
+      postcss: 8.4.5
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
       styled-jsx: 5.0.2_react@18.1.0
@@ -1243,6 +1256,9 @@ packages:
       object-hash: r2.cnpmjs.org/object-hash/2.2.0
       oidc-token-hash: r2.cnpmjs.org/oidc-token-hash/5.0.1
     dev: false
+
+  /picocolors/1.0.0:
+    resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
 
   /picomatch/2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
@@ -1297,6 +1313,14 @@ packages:
     dependencies:
       nanoid: 3.3.4
       picocolors: r2.cnpmjs.org/picocolors/1.0.0
+      source-map-js: 1.0.2
+
+  /postcss/8.4.5:
+    resolution: {integrity: sha512-jBDboWM8qpaqwkMwItqTQTiFikhs/67OYVvblFFTM7MrZjt6yMKd6r2kgXizEbTTljacm4NldIlZnhbjr84QYg==}
+    engines: {node: ^10 || ^12 || >=14}
+    dependencies:
+      nanoid: 3.3.4
+      picocolors: 1.0.0
       source-map-js: 1.0.2
 
   /preact-render-to-string/5.2.0_preact@10.7.3:
@@ -1369,6 +1393,15 @@ packages:
       is-core-module: 2.9.0
       path-parse: r2.cnpmjs.org/path-parse/1.0.7
       supports-preserve-symlinks-flag: 1.0.0
+
+  /saslprep/1.0.3:
+    resolution: {integrity: sha512-/MY/PEMbk2SuY5sScONwhUDsV2p77Znkb/q3nSVstq/yQzYJOH/Azh29p9oJLsl3LnQwSvZDKagDGBsBwSooag==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dependencies:
+      sparse-bitfield: r2.cnpmjs.org/sparse-bitfield/3.0.3
+    dev: false
+    optional: true
 
   /scheduler/0.22.0:
     resolution: {integrity: sha512-6QAm1BgQI88NPYymgGQLCZgvep4FyePDWFpXVK+zNSUgHwlqpJy8VEh8Et0KxTACS4VWwMousBElAZOH9nkkoQ==}
@@ -2288,15 +2321,6 @@ packages:
     version: 1.0.0
     dev: true
 
-  r2.cnpmjs.org/fsevents/2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==, registry: http://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/fsevents/-/fsevents-2.3.2.tgz}
-    name: fsevents
-    version: 2.3.2
-    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
-    os: [darwin]
-    requiresBuild: true
-    optional: true
-
   r2.cnpmjs.org/function-bind/1.1.1:
     resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==, registry: http://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/function-bind/-/function-bind-1.1.1.tgz}
     name: function-bind
@@ -2896,16 +2920,6 @@ packages:
     name: postcss-value-parser
     version: 4.2.0
 
-  r2.cnpmjs.org/postcss/8.4.5:
-    resolution: {integrity: sha512-jBDboWM8qpaqwkMwItqTQTiFikhs/67OYVvblFFTM7MrZjt6yMKd6r2kgXizEbTTljacm4NldIlZnhbjr84QYg==, registry: http://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/postcss/-/postcss-8.4.5.tgz}
-    name: postcss
-    version: 8.4.5
-    engines: {node: ^10 || ^12 || >=14}
-    dependencies:
-      nanoid: 3.3.4
-      picocolors: r2.cnpmjs.org/picocolors/1.0.0
-      source-map-js: 1.0.2
-
   r2.cnpmjs.org/prelude-ls/1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==, registry: http://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/prelude-ls/-/prelude-ls-1.2.1.tgz}
     name: prelude-ls
@@ -3028,17 +3042,6 @@ packages:
     version: 1.2.0
     dependencies:
       queue-microtask: r2.cnpmjs.org/queue-microtask/1.2.3
-
-  r2.cnpmjs.org/saslprep/1.0.3:
-    resolution: {integrity: sha512-/MY/PEMbk2SuY5sScONwhUDsV2p77Znkb/q3nSVstq/yQzYJOH/Azh29p9oJLsl3LnQwSvZDKagDGBsBwSooag==, registry: http://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/saslprep/-/saslprep-1.0.3.tgz}
-    name: saslprep
-    version: 1.0.3
-    engines: {node: '>=6'}
-    requiresBuild: true
-    dependencies:
-      sparse-bitfield: r2.cnpmjs.org/sparse-bitfield/3.0.3
-    dev: false
-    optional: true
 
   r2.cnpmjs.org/semver/6.3.0:
     resolution: {integrity: sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==, registry: http://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/semver/-/semver-6.3.0.tgz}
