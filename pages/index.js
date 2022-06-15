@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import dbConnect from '@/lib/dbConnect';
 import Record from '@/models/Record';
 import User from '@/models/User';
-import { Card, Avatar } from 'flowbite-react';
+import { Card, Avatar, Badge } from 'flowbite-react';
 
 const Calendar = dynamic(() => import('@/components/Calendar'), {
   ssr: false,
@@ -51,6 +51,12 @@ const Index = ({ data }) => {
                     <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
                       {user.name}
                     </p>
+                  </div>
+                  <div className="flex justify-between items-center space-x-1">
+                    <span>Goals: </span>
+                    <Badge color="green">Sleep {'>='} 7h</Badge>
+                    <Badge color="green">Eat {'<='} 10h</Badge>
+                    <Badge color="green">Sport {'>='} 20min</Badge>
                   </div>
                 </div>
                 <div className="mt-4 h-36 md:h-40 w-100">
@@ -126,8 +132,8 @@ export async function getServerSideProps() {
           return {
             _id: record._id.toString(),
             day: dayjs(record.sleepEnd).format('YYYY-MM-DD'),
-            sleep: sleep.toFixed(1),
-            eat: eat.toFixed(1),
+            sleep: Number(sleep.toFixed(1)),
+            eat: Number(eat.toFixed(1)),
             sport: sport,
             value: total,
           };
