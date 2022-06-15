@@ -13,14 +13,35 @@ const MyResponsiveCalendar = ({ data, year = dayjs().year() }) => {
       colors={['#f47560', '#61cdbb']}
       minValue={0}
       maxValue={100}
-      margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
+      margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
       yearSpacing={70}
+      yearLegend={() => ''}
       yearLegendOffset={19}
       monthBorderWidth={0}
       monthBorderColor="#ffffff"
       daySpacing={2}
-      dayBorderWidth={3}
+      dayBorderWidth={1}
       dayBorderColor="#ffffff"
+      tooltip={(data) => {
+        if (data.value === undefined) return null;
+        return (
+          <div
+            style={{
+              color: 'white',
+              backgroundColor: 'black',
+              padding: '10px',
+              fontSize: '14px',
+            }}
+          >
+            <div style={{ fontWeight: 'bold' }}>{data.day}</div>
+            <ul>
+              <li>Sleep: {data?.data.sleep} h</li>
+              <li>Eat: {data?.data.eat} h</li>
+              <li>Sport: {data?.data.sport} min</li>
+            </ul>
+          </div>
+        );
+      }}
       legends={[
         {
           anchor: 'bottom-right',
