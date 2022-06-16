@@ -28,7 +28,7 @@ const formatForm = (form) => {
 
 const Form = ({ formId, recordForm, forNewRecord = true }) => {
   const router = useRouter();
-  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
     sleepBegin: localize(recordForm.sleepBegin),
@@ -40,6 +40,7 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
 
   const putData = async (form) => {
     const { id } = router.query;
+    setLoading(true);
     try {
       const { code, data } = await request.put(
         `/records/${id}`,
@@ -53,9 +54,11 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
     } catch (error) {
       toast.error(error.message || 'Failed to update');
     }
+    setLoading(false);
   };
 
   const postData = async (form) => {
+    setLoading(true);
     try {
       const { code, message } = await request.post(
         '/records',
@@ -68,6 +71,7 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
     } catch (error) {
       toast.error(error.message || 'Failed to create');
     }
+    setLoading(false);
   };
 
   const handleChange = (e) => {
@@ -85,16 +89,17 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
     e.preventDefault();
     const errs = formValidate();
     if (Object.keys(errs).length === 0) {
+      if (loading) return;
       forNewRecord ? postData(form) : putData(form);
     } else {
-      setErrors({ errs });
+      // toast errors
     }
   };
 
   /* Makes sure record info is filled for record name, owner name, species, and image url*/
   const formValidate = () => {
     let err = {};
-    if (!form.eatBegin) err.eatBegin = 'EatBegin is required';
+    // if (!form.eatBegin) err.eatBegin = 'EatBegin is required';
     return err;
   };
 
@@ -159,14 +164,9 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
           type="submit"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
         >
-          Submit
+          {loading ? 'Submitting...' : 'Submit'}
         </button>
       </form>
-      <div>
-        {Object.keys(errors).map((err, index) => (
-          <li key={index}>{err}</li>
-        ))}
-      </div>
     </>
   );
 };

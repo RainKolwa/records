@@ -1,7 +1,8 @@
 import Form from '@/components/RecordForm';
+import dayjs from 'dayjs';
 
 const NewRecord = () => {
-  const now = new Date();
+  const now = dayjs().startOf('hour');
   const recordForm = {
     sleepBegin: now,
     sleepEnd: now,

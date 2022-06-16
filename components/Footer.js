@@ -8,7 +8,7 @@ export default function SiteFooter() {
         <Footer.Link href="/site-policy/terms-of-service">
           Terms of service
         </Footer.Link>
-        <Footer.Link href="/site-policy/privacy-polices">
+        <Footer.Link href="/site-policy/privacy-policies">
           Privacy Policy
         </Footer.Link>
       </Footer.LinkGroup>
