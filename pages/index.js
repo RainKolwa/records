@@ -40,7 +40,11 @@ const Index = ({ data }) => {
           </h5>
         </div>
         {data.map(({ user, records }) => {
-          console.log('records', records);
+          const config = records.map((item) => ({
+            ...item,
+            day: dayjs(item.day).format('YYYY-MM-DD'),
+          }));
+          console.log(config);
           return (
             <Card key={user._id} className="mb-4">
               <div className="flow-root">
@@ -61,7 +65,7 @@ const Index = ({ data }) => {
                   </div>
                 </div>
                 <div className="mt-4 h-36 md:h-40 w-100">
-                  <Calendar data={records} />
+                  <Calendar data={config} />
                 </div>
               </div>
             </Card>
@@ -122,9 +126,14 @@ export async function getServerSideProps() {
         records: records.map((record) => {
           const sleep = dayjs(record.sleepEnd).diff(
             dayjs(record.sleepBegin),
-            'hour'
+            'hour',
+            true
           );
-          const eat = dayjs(record.eatEnd).diff(dayjs(record.eatBegin), 'hour');
+          const eat = dayjs(record.eatEnd).diff(
+            dayjs(record.eatBegin),
+            'hour',
+            true
+          );
           const sport = record.sport;
           const total =
             (sleep >= 7 ? 33.3 : 0) +
@@ -132,7 +141,7 @@ export async function getServerSideProps() {
             (sport >= 20 ? 33.3 : 0);
           return {
             _id: record._id.toString(),
-            day: dayjs(record.sleepEnd).format('YYYY-MM-DD'),
+            day: record.sleepEnd,
             sleep: Number(sleep.toFixed(1)),
             eat: Number(eat.toFixed(1)),
             sport: sport,
