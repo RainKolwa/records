@@ -40,6 +40,7 @@ const Index = ({ data }) => {
           </h5>
         </div>
         {data.map(({ user, records }) => {
+          console.log('records', records);
           return (
             <Card key={user._id} className="mb-4">
               <div className="flow-root">
@@ -103,7 +104,7 @@ const Index = ({ data }) => {
 
 export async function getServerSideProps() {
   await dbConnect();
-  const users = await User.find().limit(10).lean();
+  const users = await User.find().sort('name').limit(10).lean();
   let data = [];
   await Promise.all(
     users.map(async (user) => {
