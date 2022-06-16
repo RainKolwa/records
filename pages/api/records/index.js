@@ -19,6 +19,7 @@ export default async function handler(req, res) {
         //
         const { page = 1, perPage = 10 } = req.query;
         const records = await Record.find({ author: session.user.id })
+          .sort('-sleepEnd')
           .skip((page - 1) * perPage)
           .limit(perPage)
           .exec();
