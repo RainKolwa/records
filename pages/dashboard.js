@@ -12,10 +12,7 @@ const Index = ({ records }) => {
   const handleEdit = (id) => {
     router.push(`/record/${id}/edit`);
   };
-  useEffect(() => {
-    toast.success('阿斯利康放假啊圣诞快乐粉丝地方，是打发师傅');
-    toast.success('1');
-  });
+
   return (
     <>
       <Link href="/record/new">

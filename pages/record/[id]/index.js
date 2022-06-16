@@ -14,7 +14,7 @@ const RecordPage = ({ record }) => {
     const recordID = router.query.id;
     try {
       await request.delete(`/records/${recordID}`);
-      router.push('/');
+      router.push('/dashboard');
     } catch (error) {
       setMessage('Failed to delete the record.');
     }
