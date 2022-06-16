@@ -1,16 +1,35 @@
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getSession } from 'next-auth/react';
 import dayjs from 'dayjs';
-import dbConnect from '@/lib/dbConnect';
-import Record from '@/models/Record';
+import { Pagination } from 'flowbite-react';
+import request from '@/lib/request';
 
-const Index = ({ records }) => {
+const Dashboard = () => {
   const router = useRouter();
+  const [records, setRecords] = useState([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
   const handleEdit = (id) => {
     router.push(`/record/${id}/edit`);
   };
-
+  const onPageChange = (page) => {
+    setPage(page);
+  };
+  const loadRecords = async (page) => {
+    const res = await request('/records', {
+      params: {
+        page,
+      },
+    });
+    if (res.code === 0) {
+      setRecords(res.data);
+      setTotal(res.pagination.total);
+    }
+  };
+  useEffect(() => {
+    loadRecords(page);
+  }, [page]);
   return (
     <div className="pt-2">
       <Link href="/record/new">
@@ -82,28 +101,16 @@ const Index = ({ records }) => {
           </tbody>
         </table>
       </div>
+      <div className="mt-2 mb-4 flex justify-end">
+        <Pagination
+          currentPage={page}
+          totalPages={total}
+          onPageChange={onPageChange}
+          showIcons={true}
+        />
+      </div>
     </div>
   );
 };
 
-export async function getServerSideProps(context) {
-  await dbConnect();
-  const session = await getSession(context);
-  let records = [];
-  if (session) {
-    const result = await Record.find({ author: session?.user?.id })
-      .sort('-sleepEnd')
-      .lean();
-    records = result.map((doc) => {
-      return JSON.parse(
-        JSON.stringify({
-          ...doc,
-          _id: doc._id.toString(),
-        })
-      );
-    });
-  }
-  return { props: { records: records } };
-}
-
-export default Index;
+export default Dashboard;
