@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { mutate } from 'swr';
 import dayjs from 'dayjs';
 import request from '@/lib/request';
+import toast from '@/lib/toast';
 
 const InputStyle =
   'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
@@ -47,15 +48,16 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
       );
       if (code !== 0) {
         throw new Error(message);
+      } else {
+        toast.success('Updated successfully');
+        mutate(`/api/records/${id}`, data, false); // Update the local data without a revalidation
+        router.push('/dashboard');
       }
-      mutate(`/api/records/${id}`, data, false); // Update the local data without a revalidation
-      router.push('/dashboard');
     } catch (error) {
-      setMessage('Failed to update record');
+      toast.error(error.message || 'Failed to update');
     }
   };
 
-  /* The POST method adds a new entry in the mongodb database. */
   const postData = async (form) => {
     try {
       const { code, message } = await request.post(
@@ -64,10 +66,12 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
       );
       if (code !== 0) {
         throw new Error(message);
+      } else {
+        toast.success('Added successfully');
+        router.push('/dashboard');
       }
-      router.push('/dashboard');
     } catch (error) {
-      setMessage('Failed to add record');
+      toast.error(error.message || 'Failed to create');
     }
   };
 

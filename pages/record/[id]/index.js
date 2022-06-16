@@ -4,16 +4,20 @@ import Link from 'next/link';
 import dayjs from 'dayjs';
 import dbConnect from '@/lib/dbConnect';
 import request from '@/lib/request';
+import toast from '@/lib/toast';
 import Record from '@/models/Record';
 
-/* Allows you to view record card info and delete record card*/
 const RecordPage = ({ record }) => {
   const router = useRouter();
   const [message, setMessage] = useState('');
+
   const handleDelete = async () => {
     const recordID = router.query.id;
     try {
-      await request.delete(`/records/${recordID}`);
+      const res = await request.delete(`/records/${recordID}`);
+      if (res.code === 0) {
+        toast.success('Deleted successfully');
+      }
       router.push('/dashboard');
     } catch (error) {
       setMessage('Failed to delete the record.');

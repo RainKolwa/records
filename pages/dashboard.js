@@ -4,8 +4,6 @@ import { getSession } from 'next-auth/react';
 import dayjs from 'dayjs';
 import dbConnect from '@/lib/dbConnect';
 import Record from '@/models/Record';
-import { useEffect } from 'react';
-import toast from '@/lib/toast';
 
 const Index = ({ records }) => {
   const router = useRouter();
