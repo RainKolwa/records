@@ -12,7 +12,7 @@ const Index = ({ records }) => {
   };
 
   return (
-    <>
+    <div className="pt-2">
       <Link href="/record/new">
         <button
           type="button"
@@ -82,7 +82,7 @@ const Index = ({ records }) => {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 };
 

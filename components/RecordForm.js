@@ -29,7 +29,6 @@ const formatForm = (form) => {
 const Form = ({ formId, recordForm, forNewRecord = true }) => {
   const router = useRouter();
   const [errors, setErrors] = useState({});
-  const [message, setMessage] = useState('');
 
   const [form, setForm] = useState({
     sleepBegin: localize(recordForm.sleepBegin),
@@ -42,13 +41,11 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
   const putData = async (form) => {
     const { id } = router.query;
     try {
-      const { code, data, message } = await request.put(
+      const { code, data } = await request.put(
         `/records/${id}`,
         formatForm(form)
       );
-      if (code !== 0) {
-        throw new Error(message);
-      } else {
+      if (code === 0) {
         toast.success('Updated successfully');
         mutate(`/api/records/${id}`, data, false); // Update the local data without a revalidation
         router.push('/dashboard');
@@ -64,9 +61,7 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
         '/records',
         formatForm(form)
       );
-      if (code !== 0) {
-        throw new Error(message);
-      } else {
+      if (code === 0) {
         toast.success('Added successfully');
         router.push('/dashboard');
       }
@@ -167,7 +162,6 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
           Submit
         </button>
       </form>
-      <p>{message}</p>
       <div>
         {Object.keys(errors).map((err, index) => (
           <li key={index}>{err}</li>
