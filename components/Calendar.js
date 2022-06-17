@@ -1,15 +1,33 @@
 import { ResponsiveCalendar } from '@nivo/calendar';
 import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import useThemeMode from '../hooks/useThemeMode';
 
 const MyResponsiveCalendar = ({ data, year = dayjs().year() }) => {
   const start = `${year}-01-01`;
   const end = `${year}-12-31`;
+  const colors = {
+    dark: 'red',
+    light: 'gray',
+  };
+  const isDark = useThemeMode();
+  console.log('isDark', isDark);
+  const [emptyColor, setEmptyColor] = useState(
+    isDark ? colors.dark : colors.light
+  );
+  useEffect(() => {
+    if (isDark) {
+      setEmptyColor(colors.dark);
+    } else {
+      setEmptyColor(colors.light);
+    }
+  }, [isDark]);
   return (
     <ResponsiveCalendar
       data={data}
       from={start}
       to={end}
-      emptyColor="#eeeeee"
+      emptyColor={emptyColor}
       colors={['#f47560', '#61cdbb']}
       minValue={0}
       maxValue={100}

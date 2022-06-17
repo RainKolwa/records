@@ -58,7 +58,7 @@ const Index = ({ data }) => {
                     </p>
                   </div>
                   <div className="flex justify-between items-center space-x-1">
-                    <span>Goals: </span>
+                    <span className="dark:text-white">Goals: </span>
                     <Badge color="green">Sleep {'>='} 7h</Badge>
                     <Badge color="green">Eat {'<='} 10h</Badge>
                     <Badge color="green">Sport {'>='} 20min</Badge>

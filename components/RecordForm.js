@@ -41,35 +41,24 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
   const putData = async (form) => {
     const { id } = router.query;
     setLoading(true);
-    try {
-      const { code, data } = await request.put(
-        `/records/${id}`,
-        formatForm(form)
-      );
-      if (code === 0) {
-        toast.success('Updated successfully');
-        mutate(`/api/records/${id}`, data, false); // Update the local data without a revalidation
-        router.push('/dashboard');
-      }
-    } catch (error) {
-      toast.error(error.message || 'Failed to update');
+    const { code, data } = await request.put(
+      `/records/${id}`,
+      formatForm(form)
+    );
+    if (code === 0) {
+      toast.success('Updated successfully');
+      mutate(`/api/records/${id}`, data, false); // Update the local data without a revalidation
+      router.push('/dashboard');
     }
     setLoading(false);
   };
 
   const postData = async (form) => {
     setLoading(true);
-    try {
-      const { code, message } = await request.post(
-        '/records',
-        formatForm(form)
-      );
-      if (code === 0) {
-        toast.success('Added successfully');
-        router.push('/dashboard');
-      }
-    } catch (error) {
-      toast.error(error.message || 'Failed to create');
+    const { code } = await request.post('/records', formatForm(form));
+    if (code === 0) {
+      toast.success('Added successfully');
+      router.push('/dashboard');
     }
     setLoading(false);
   };
@@ -91,8 +80,6 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
     if (Object.keys(errs).length === 0) {
       if (loading) return;
       forNewRecord ? postData(form) : putData(form);
-    } else {
-      // toast errors
     }
   };
 
