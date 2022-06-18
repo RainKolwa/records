@@ -16,8 +16,8 @@ TODO:
 - [x] dark mode
 - [ ] chart
   - [ ] trend
-  - [ ] daily check
+  - [x] daily check
 - [x] lint code
 - [x] dev env
-- [ ] users
-- [ ] Index Page
+- [x] users
+- [x] Index Page

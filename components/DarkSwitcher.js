@@ -1,16 +1,6 @@
-import { useContext, useEffect } from 'react';
 import { ThemeContext } from '../pages/_app';
 
 export default function DarkSwitcher() {
-  useEffect(() => {
-    if (
-      localStorage.getItem('color-theme') === 'dark' ||
-      (!('color-theme' in localStorage) &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ) {
-      document.documentElement.classList.add('dark');
-    }
-  });
   const toggle = (func) => {
     const setDark = () => {
       document.documentElement.classList.add('dark');

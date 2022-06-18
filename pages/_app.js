@@ -1,7 +1,7 @@
 import 'react-toastify/dist/ReactToastify.css';
 import '../css/globals.css';
 import '../css/toast.css';
-import { useState, createContext } from 'react';
+import { useState, createContext, useEffect } from 'react';
 import Head from 'next/head';
 import { SessionProvider } from 'next-auth/react';
 import { ToastContainer } from 'react-toastify';
@@ -14,7 +14,19 @@ export const ThemeContext = createContext({
 });
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
-  const [theme, updateTheme] = useState('light');
+  const [theme, updateTheme] = useState('');
+
+  useEffect(() => {
+    const isDarkMode =
+      localStorage.getItem('color-theme') === 'dark' ||
+      (!('color-theme' in localStorage) &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches);
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    }
+    updateTheme(isDarkMode ? 'dark' : 'light');
+  }, [updateTheme]);
+
   return (
     <ThemeContext.Provider
       value={{
