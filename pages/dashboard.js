@@ -17,14 +17,18 @@ const Dashboard = () => {
     setPage(page);
   };
   const loadRecords = async (page) => {
-    const res = await request('/records', {
-      params: {
-        page,
-      },
-    });
-    if (res.code === 0) {
-      setRecords(res.data);
-      setTotal(res.pagination.total);
+    try {
+      const res = await request('/records', {
+        params: {
+          page,
+        },
+      });
+      if (res.code === 0) {
+        setRecords(res.data);
+        setTotal(res.pagination.total);
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
   useEffect(() => {

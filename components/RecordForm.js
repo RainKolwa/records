@@ -41,24 +41,32 @@ const Form = ({ formId, recordForm, forNewRecord = true }) => {
   const putData = async (form) => {
     const { id } = router.query;
     setLoading(true);
-    const { code, data } = await request.put(
-      `/records/${id}`,
-      formatForm(form)
-    );
-    if (code === 0) {
-      toast.success('Updated successfully');
-      mutate(`/api/records/${id}`, data, false); // Update the local data without a revalidation
-      router.push('/dashboard');
+    try {
+      const { code, data } = await request.put(
+        `/records/${id}`,
+        formatForm(form)
+      );
+      if (code === 0) {
+        toast.success('Updated successfully');
+        mutate(`/api/records/${id}`, data, false); // Update the local data without a revalidation
+        router.push('/dashboard');
+      }
+    } catch (error) {
+      console.error(error);
     }
     setLoading(false);
   };
 
   const postData = async (form) => {
     setLoading(true);
-    const { code } = await request.post('/records', formatForm(form));
-    if (code === 0) {
-      toast.success('Added successfully');
-      router.push('/dashboard');
+    try {
+      const { code } = await request.post('/records', formatForm(form));
+      if (code === 0) {
+        toast.success('Added successfully');
+        router.push('/dashboard');
+      }
+    } catch (error) {
+      console.error(error);
     }
     setLoading(false);
   };

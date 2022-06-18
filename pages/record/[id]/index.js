@@ -9,7 +9,6 @@ import Record from '@/models/Record';
 
 const RecordPage = ({ record }) => {
   const router = useRouter();
-  const [message, setMessage] = useState('');
 
   const handleDelete = async () => {
     const recordID = router.query.id;
@@ -20,7 +19,8 @@ const RecordPage = ({ record }) => {
       }
       router.push('/dashboard');
     } catch (error) {
-      setMessage('Failed to delete the record.');
+      console.error(error);
+      toast.error(error.message || 'Failed to delete');
     }
   };
 
@@ -76,7 +76,6 @@ const RecordPage = ({ record }) => {
           </button>
         </div>
       </div>
-      {message && <p>{message}</p>}
     </div>
   );
 };
