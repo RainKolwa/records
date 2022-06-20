@@ -44,7 +44,6 @@ const Index = ({ data }) => {
             ...item,
             day: dayjs(item.day).format('YYYY-MM-DD'),
           }));
-          console.log(config);
           return (
             <Card key={user._id} className="mb-4">
               <div className="flow-root">
@@ -110,9 +109,9 @@ export async function getServerSideProps() {
   await dbConnect();
   const users = await User.find().sort('name').limit(10).lean();
   let data = [];
-  await Promise.all(
+  const res = await Promise.all(
     users.map(async (user) => {
-      const records = await Record.find({
+      return Record.find({
         author: user._id,
         sleepEnd: {
           $gte: dayjs().startOf('year').toISOString(),
@@ -121,36 +120,41 @@ export async function getServerSideProps() {
       })
         .sort('-sleepEnd')
         .lean();
-      data.push({
-        user: user,
-        records: records.map((record) => {
-          const sleep = dayjs(record.sleepEnd).diff(
-            dayjs(record.sleepBegin),
-            'hour',
-            true
-          );
-          const eat = dayjs(record.eatEnd).diff(
-            dayjs(record.eatBegin),
-            'hour',
-            true
-          );
-          const sport = record.sport;
-          const total =
-            (sleep >= 7 ? 33.3 : 0) +
-            (eat <= 10 ? 33.3 : 0) +
-            (sport >= 20 ? 33.3 : 0);
-          return {
-            _id: record._id.toString(),
-            day: record.sleepEnd,
-            sleep: Number(sleep.toFixed(1)),
-            eat: Number(eat.toFixed(1)),
-            sport: sport,
-            value: total,
-          };
-        }),
-      });
     })
   );
+  // res = [records1, records2, records3]
+  users.forEach((user, i) => {
+    data.push({
+      user,
+      records: res[i].map((record) => {
+        const sleep = dayjs(record.sleepEnd).diff(
+          dayjs(record.sleepBegin),
+          'hour',
+          true
+        );
+        const eat = dayjs(record.eatEnd).diff(
+          dayjs(record.eatBegin),
+          'hour',
+          true
+        );
+        const sport = record.sport;
+        const total =
+          (sleep >= 7 ? 33.3 : 0) +
+          (eat <= 10 ? 33.3 : 0) +
+          (sport >= 20 ? 33.3 : 0);
+        return {
+          _id: record._id.toString(),
+          day: record.sleepEnd,
+          sleep: Number(sleep.toFixed(1)),
+          eat: Number(eat.toFixed(1)),
+          sport: sport,
+          value: total,
+        };
+      }),
+    });
+  });
+
+  console.log('data', data);
 
   return {
     props: { data: data.map((item) => JSON.parse(JSON.stringify(item))) },
