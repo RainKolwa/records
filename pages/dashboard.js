@@ -1,15 +1,19 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import dayjs from 'dayjs';
 import { Pagination } from 'flowbite-react';
+import { useSession } from 'next-auth/react';
+import dayjs from 'dayjs';
 import request from '@/lib/request';
+import LoginHint from '@/components/LoginHint';
 
 const Dashboard = () => {
   const router = useRouter();
+  const { data: session } = useSession();
   const [records, setRecords] = useState([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+
   const handleEdit = (id) => {
     router.push(`/record/${id}/edit`);
   };
@@ -32,8 +36,15 @@ const Dashboard = () => {
     }
   };
   useEffect(() => {
-    loadRecords(page);
-  }, [page]);
+    if (session) {
+      loadRecords(page);
+    }
+  }, [page, session]);
+
+  if (!session) {
+    return <LoginHint />;
+  }
+
   return (
     <div className="pt-2">
       <Link href="/record/new">
