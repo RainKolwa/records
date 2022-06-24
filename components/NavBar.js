@@ -15,7 +15,7 @@ export default function HeaderNavBar() {
   const isLoggedIn = status === 'authenticated';
 
   return (
-    <Navbar fluid={true} rounded={true} className="relative z-10 py-6">
+    <Navbar fluid={true} rounded={true} className="relative z-10 py-6 !px-0">
       <Navbar.Brand href="/">
         <Image src={logo} width="38" height="38" alt="Ming Logo" />
         <span className="ml-2 self-center whitespace-nowrap text-xl font-semibold dark:text-white">
